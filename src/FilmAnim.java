@@ -52,6 +52,23 @@ public class FilmAnim extends ImgFilm{
         return(super.filmToString()+"Doporuceny vek: "+vek+herci);
     }
 
+	
+	public String filmHerec(String herec)
+    {
+        String filmy = "";
+        if(SeznamHercu!=null){
+            for (String jmeno : this.SeznamHercu) {
+            	if (herec.equals(jmeno)) {
+            		filmy= getNazev();
+            		System.out.println(filmy);
+            	}
+            }
+        }
+		return filmy;
+       
+    }
+	
+	
 	@Override
     public int hashCode() {
         return nazev.hashCode();

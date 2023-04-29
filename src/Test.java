@@ -287,7 +287,7 @@ public class Test {
 			System.out.println("4 .. přidani hodnoceni ");				// slovně
 			System.out.println("5 .. vypis vsech filmu ");				//
 			System.out.println("6 .. vyhledavani podle nazvu");			//
-			System.out.println("7 .. vyhledavani podle hercu");			
+			System.out.println("7 .. vyhledavani podle hercu");			//
 			System.out.println("8 .. ulozeni do souboru");				//
 			System.out.println("9 .. nacteni ze souboru");				//
 			System.out.println("10.. konec a ulozeni do SQL");   		
@@ -570,8 +570,26 @@ public class Test {
 					break;
 //----6666666666666666666666666666666-----------------------------------------------------------------------------------------
 				case 7:
-					
-					
+					System.out.println("Zadejte druh filmu ve kterém chceš hledat:\n 1 pro herce \n 2 pro animatora");
+					druh=0; 
+					druh=Test.pouzeCelaCisla(sc);
+					if (druh== 1)
+						System.out.println("Zadejte jmeno herce");
+					else
+						System.out.println("Zadejte jmeno animatora");
+					 String jmeno=sc.nextLine();
+					 jmeno=sc.nextLine();
+					 if  (druh== 1) {
+						 System.out.println("Seznam filmů: ");
+						for (FilmHrany film : hraneFilmy) {
+								film.filmHerec(jmeno);
+					            } 
+					 }else if(druh== 2) {
+						 System.out.println("Seznam filmů: ");
+						for (FilmAnim film : animovaneFilmy) {
+							film.filmHerec(jmeno);
+					        }  
+					 }
 					System.out.println("-7-----------------------------------");
 //----777777777777777777777777777777777-----------------------------------------------------------------------------------------
 
@@ -702,10 +720,6 @@ public class Test {
 			                }
 			                
 			            }
-			            
-			            
-			            
-			            
 			            if (druh9==1) {
 				            	for (FilmHrany film : hraneFilmy) {
 								if(film.getNazev().equals(nazev9)){

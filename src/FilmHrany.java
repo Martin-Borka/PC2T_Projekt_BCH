@@ -60,6 +60,23 @@ public class FilmHrany extends ImgFilm{
     }
 	
 	
+	
+    public String filmHerec(String herec)
+    {
+        String filmy = "";
+        if(SeznamHercu!=null){
+            for (String jmeno : this.SeznamHercu) {
+            	if (herec.equals(jmeno)) {
+            		filmy= getNazev();
+            		System.out.println(filmy);
+            	}
+            }
+        }
+		return filmy;
+       
+    }
+	
+	
 	@Override
     public int hashCode() {
         return nazev.hashCode();
