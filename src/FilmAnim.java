@@ -97,13 +97,13 @@ public class FilmAnim extends ImgFilm{
     
     public String filmToSave()
     {
-        String herci = "\n";
+        String herci = ":";
         if(SeznamHercu!=null){
             for (String jmeno : this.SeznamHercu) {
-                herci+=jmeno+"\n";
+                herci+=jmeno+":";
             }
         }
         
-        return("2 \n"+super.filmToSave()+"\n"+Float.toString(Hodnoceni)+"\n"+Integer.toString(vek)+herci);
+        return("2:"+super.filmToSave()+":"+Float.toString(Hodnoceni)+":"+Integer.toString(vek)+herci);
     }
 }

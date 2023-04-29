@@ -50,8 +50,8 @@ public abstract class ImgFilm {
     {
         return(
         this.nazev+
-        "\n"+this.reziser+
-        "\n"+ this.rok
+        ":"+this.reziser+
+        ":"+ this.rok
         );
     }
 	

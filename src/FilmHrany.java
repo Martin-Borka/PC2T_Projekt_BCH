@@ -115,14 +115,14 @@ public class FilmHrany extends ImgFilm{
     
     public String filmToSave()
     {
-        String herci = "\n";
+        String herci = ":";
         if(SeznamHercu!=null){
             for (String jmeno : this.SeznamHercu) {
-                herci+=jmeno+"\n";
+                herci+=jmeno+":";
             }
         }
         
-        return("1 \n"+super.filmToSave()+"\n"+Float.toString(Hodnoceni)+herci);
+        return("1:"+super.filmToSave()+":"+Float.toString(Hodnoceni)+":0"+herci);
     }
     
     

@@ -1,7 +1,9 @@
 import java.awt.geom.Arc2D.Float;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -286,8 +288,8 @@ public class Test {
 			System.out.println("5 .. vypis vsech filmu ");				//
 			System.out.println("6 .. vyhledavani podle nazvu");			//
 			System.out.println("7 .. vyhledavani podle hercu");			
-			System.out.println("8 .. ulozeni do souboru");				
-			System.out.println("9 .. nacteni ze souboru");				
+			System.out.println("8 .. ulozeni do souboru");				//
+			System.out.println("9 .. nacteni ze souboru");				//
 			System.out.println("10.. konec a ulozeni do SQL");   		
 			
 			volba=pouzeCelaCisla(sc);
@@ -580,13 +582,10 @@ public class Test {
 						druh=0; 
 						boolean n8=false;
 						int id8 = 0;
-						
 						druh=Test.pouzeCelaCisla(sc);
-						
 						System.out.println("Zadejte nazev filmu");
 						 nazev=sc.nextLine();
 						 nazev=sc.nextLine();
-						
 						if (druh==1) {
 							for (FilmHrany film : hraneFilmy) {
 								if(film.getNazev().equals(nazev)){
@@ -610,8 +609,6 @@ public class Test {
 						            System.out.println("Nastala chyba při ukládání prvku do souboru.");
 						            e.printStackTrace();
 						        }
-							//-----------------------
-							
 						}
 						else if(druh==2){
 							for (FilmAnim film : animovaneFilmy) {
@@ -620,7 +617,6 @@ public class Test {
 					                break;
 					            }
 					            id8++;
-							
 							}
 							if (n8==false) {
 								System.out.println("Film nebyl nalezen");
@@ -637,21 +633,11 @@ public class Test {
 						            System.out.println("Nastala chyba při ukládání prvku do souboru.");
 						            e.printStackTrace();
 						        }
-							//-------------------
 						}
 						else {
 							System.out.println("Tato moznost prozatim neni");
 							break;
-						}
-						
-
-						        
-						       
-						    
-						
-
-						
-							/*
+						}	/*
 								
 								try {
 								
@@ -675,10 +661,64 @@ public class Test {
 								}
 								*/
 							
-						
 						System.out.println("-8-----------------------------------");
+//----888888888888888888888888888888888-----------------------------------------------------------------------------------------
 					break;
 				case 9:
+					int rok9=0;
+					 String reziser9="";
+					 double hodnoceni9=0.0;
+					 int vek9=0;
+					 int druh9=1;
+					 List<String> seznamhercu9=new ArrayList<String>();
+				
+					
+					System.out.println("Zadejte nazev filmu");
+					 String nazev9=sc.nextLine();
+					 nazev9=sc.nextLine();
+					 
+					 
+				    
+			        try {
+			            FileReader reader = new FileReader(nazev9+".txt");
+			            BufferedReader bufferedReader = new BufferedReader(reader);
+
+			            String line;
+			            while ((line = bufferedReader.readLine()) != null) {
+			                String[] data = line.split(":");
+			                
+			                 druh9 = Integer.valueOf(data[0]);
+			                nazev9 = data[1];
+			                reziser9 = data[2];
+			                rok9 = Integer.valueOf(data[3]);
+			               double a = Double.valueOf(data[4]);
+			               hodnoceni9 = (float) a;
+			               vek9 = Integer.valueOf(data[5]);
+			               System.out.println(druh9);
+			               System.out.println(nazev9);
+			                for(int i=6; i<data.length;i++) {
+			                seznamhercu9.add(data[i]);	
+			                }
+			                
+			            }
+			            if (druh9==1) {
+								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9));
+							}else {
+								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9));
+							}
+			            
+			            bufferedReader.close();
+			            reader.close();
+			            System.out.println("Data byla úspěšně načtena ze souboru.");
+			        } catch (IOException e) {
+			            System.out.println("Nastala chyba při načítání dat ze souboru.");
+			            e.printStackTrace();
+			        }
+
+			        // zde můžete použít ArrayList s načtenými daty
+			    
+			        System.out.println("-9-----------------------------------");
+//----99999999999999999999999999999999-----------------------------------------------------------------------------------------					
 					break;
 				default:
 					run=false;

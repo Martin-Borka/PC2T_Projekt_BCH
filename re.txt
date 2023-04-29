@@ -1,6 +1,0 @@
-    Nazev: re
-    Reziser: ZTR
-    Rok vydani: 5
---Seznam herců: 
-ZGFG
-HVFGB
