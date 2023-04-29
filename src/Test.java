@@ -670,6 +670,7 @@ public class Test {
 					 double hodnoceni9=0.0;
 					 int vek9=0;
 					 int druh9=1;
+					 Boolean n9=false;
 					 List<String> seznamhercu9=new ArrayList<String>();
 				
 					
@@ -701,9 +702,28 @@ public class Test {
 			                }
 			                
 			            }
+			            
+			            
+			            
+			            
 			            if (druh9==1) {
+				            	for (FilmHrany film : hraneFilmy) {
+								if(film.getNazev().equals(nazev9)){
+					                n9 = true;
+					                break;
+					            }
+							}
+				            	if (n9==true)
 								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9));
+								
 							}else {
+								for (FilmAnim film : animovaneFilmy) {
+									if(film.getNazev().equals(nazev9)){
+						                n9 = true;
+						                break;
+						            }
+								}
+								if (n9==true)
 								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9));
 							}
 			            
