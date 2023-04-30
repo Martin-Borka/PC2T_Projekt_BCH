@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class FilmAnim extends ImgFilm{
 	List<String>SeznamHercu;
@@ -34,6 +35,9 @@ public class FilmAnim extends ImgFilm{
 		this.Hodnoceni= hodnoceni;
 		
 	}
+	
+	
+
 	
 	
 	public String getNazev() {

@@ -251,8 +251,9 @@ public class Test {
 		List<FilmAnim> animovaneFilmy = new ArrayList<FilmAnim>();
         List<FilmHrany> hraneFilmy = new ArrayList<FilmHrany>();
         List<Herec> herci = new ArrayList<Herec>();
-       /* SQLDatabaze sql = new SQLDatabaze();
-		
+        SQLDatabaze sql = new SQLDatabaze();
+		/*  
+		 ps nemám rád SQL
 		sql.connect();
 		sql.createTable();
 		System.out.println("Nacitani animaku...");
@@ -262,7 +263,7 @@ public class Test {
 		System.out.println("Hotovo");
 		sql.disconnect();
         
-        */
+       */
         
 		float hodnoceni;
 		int volba;
@@ -281,7 +282,7 @@ public class Test {
 			System.out.println("8 .. ulozeni do souboru");				//
 			System.out.println("9 .. nacteni ze souboru");				//
 			System.out.println("10.. herci kteri hrali ve vice filmech"); //  		
-			System.out.println("11.. konec a ulozeni do SQL"); 
+			System.out.println("11.. konec a neulozeni do SQL"); 
 			
 			volba=pouzeCelaCisla(sc);
 			
@@ -799,21 +800,27 @@ public class Test {
 					
 				break;
 				default:
-					/*
+					
 					sql.connect();
 					sql.dropTable("animovane");
 					sql.dropTable("hrane");
 					sql.createTable();
 					
+					sql.connect();
+					sql.dropTable("animovane");
+					sql.dropTable("hrane");
+					sql.dropTable("herciH");
+					sql.dropTable("herciA");
+					sql.createTable();
 					
+					
+					/*
+					ps nemám pořád rád SQL
 					System.out.println("Ukladani animovanych filmu...");
-					seznamAnimaku.ulozeniDatabaze(sql);
+					animovaneFilmy.ulozeniDatabaze(sql);
 					System.out.println("Ukladani hranych filmu...");
-					seznamHra.ulozeniDatabaze(sql);
-					System.out.println("Ukladani hodnoceni filmu...");
-					seznamHodnoceni.ulozeniDatabaze(sql);
-					System.out.println("Ukladani hercu...");
-					seznamHercu.ulozeniDatabaze(sql);
+					hraneFilmy.ulozeniDatabaze(sql);
+					
 					sql.disconnect();
 					System.out.println("Hotovo.");
 					*/
