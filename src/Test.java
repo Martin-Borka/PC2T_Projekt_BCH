@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.sql.Connection;
 
 import org.w3c.dom.Text;
 
@@ -18,7 +19,6 @@ public class Test {
 	
 	public static void upravafilmu(List<FilmAnim> animovaneFilmy, List<FilmHrany> hraneFilmy) {
 		
-		//public static void upravFilm(List<FilmAnimovany> animovaneFilmy, List<FilmHrany> hraneFilmy)
 	        String nazev;
 	        String herec;
 	        int volba;
@@ -52,7 +52,7 @@ public class Test {
 	             {
 	                    case 1:
 	                        System.out.println(
-	                            "1   Upravit název \n2   Upravit režiséra \n3   Upravit rok vydání \n4   Upravit seznam herců \n5   Upravit hodnocení \n6   Hotovo\n");
+	                            "1.. Upravit název \n2.. Upravit režiséra \n3.. Upravit rok vydání \n4.. Upravit seznam herců \n5.. Upravit hodnocení \n6.. Hotovo\n");
 	                        
 	                        volba=Test.pouzeCelaCisla(sc);
 	                        kos=sc.nextLine();
@@ -86,12 +86,14 @@ public class Test {
 	                                System.out.println("                           "+vybranyFilm.SeznamHercu.get(j));
 	                            }
 	                            List<String> novySeznamHercu = new ArrayList<String>();
-	                            System.out.print("    Zadej jméno herce (pro ukončení zápisu zadej 0)");
-	                            herec = ctecka.upravJmeno(sc.nextLine());
-	                            while(!herec.equals("0")){
+	                            herec="";
+	                            System.out.print("    Zadej jméno herce ");
+	                            herec = sc.nextLine();
+	                            while(!herec.equals("")){
 	                                novySeznamHercu.add(herec);
-	                                System.out.print("    Zadej jméno herce (pro ukončení zápisu zadej 0)");
-	                                herec = ctecka.upravJmeno(sc.nextLine());
+	                                herec="";
+		                            System.out.print("    Zadej jméno herce ");
+		                            herec = sc.nextLine();
 	                            }
 	                            vybranyFilm.setSeznamHercu(novySeznamHercu);
 	                        break;
@@ -115,8 +117,7 @@ public class Test {
 	                        break;
 	                        }
 	                        System.out.println("------------------------------------");
-	                        System.out.println(
-	                            "1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n0   Hotovo\n9   Zrušit změny\n");
+	                        System.out.println("1.. Upravit název\n2.. Upravit režiséra\n3.. Upravit rok vydání\n4.. Upravit seznam herců\n5.. Upravit hodnocení\n0.. Hotovo\n9.. Zrušit změny\n");
 	                        
 	                        volba=Test.pouzeCelaCisla(sc);
 	                        kos=sc.nextLine();
@@ -124,7 +125,7 @@ public class Test {
 	                break;
 	                
 	                case 2:
-	                    System.out.println("1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n6   Upravit Doporučný věk\n0   Hotovo\n9   Zrušit změny\n");
+	                    System.out.println("1.. Upravit název\n2.. Upravit režiséra\n3.. Upravit rok vydání\n4.. Upravit seznam herců\n5.. Upravit hodnocení\n6.. Upravit Doporučný věk\n0.. Hotovo\n9.. Zrušit změny\n");
                         
 	                    volba=Test.pouzeCelaCisla(sc);
 	                    kos=sc.nextLine();
@@ -151,13 +152,16 @@ public class Test {
 	                            System.out.println("                               "+vybranyFilm.SeznamHercu.get(j));
 	                        }
 	                        List<String> novySeznamHercu = new ArrayList<String>();
-	                        System.out.print("    Zadej jméno animátora (pro ukončení zápisu zadej 0)");
-	                        herec = ctecka.upravJmeno(sc.nextLine());
-	                        while(!herec.equals("0")){
-	                            novySeznamHercu.add(herec);
-	                            System.out.print("    Zadej jméno animátora (pro ukončení zápisu zadej 0)");
-	                            herec = ctecka.upravJmeno(sc.nextLine());
-	                        }
+	                        System.out.print("    Zadej jméno herce ");
+	                        herec="";
+                            herec = sc.nextLine();
+	                        while(!herec.equals("")){
+                                novySeznamHercu.add(herec);
+                                herec="";
+	                            System.out.print("    Zadej jméno herce ");
+	                            herec = sc.nextLine();
+                            }
+	                        
 	                        vybranyFilm.setSeznamHercu(novySeznamHercu);
 	                    break;
 	                    case 5:
@@ -183,7 +187,7 @@ public class Test {
 	                    break;
 	                    }
 	                    System.out.println("------------------------------------");
-	                    System.out.println("1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n6   Upravit Doporučný věk\n0   Hotovo\n9   Zrušit změny\n");
+	                    System.out.println("1.. Upravit název\n2.. Upravit režiséra\n3.. Upravit rok vydání\n4.. Upravit seznam herců\n5.. Upravit hodnocení\n6.. Upravit Doporučný věk\n0.. Hotovo\n9.. Zrušit změny\n");
                         
 	                    volba=Test.pouzeCelaCisla(sc);
 	                    kos=sc.nextLine();
@@ -246,18 +250,23 @@ public class Test {
 		
 		List<FilmAnim> animovaneFilmy = new ArrayList<FilmAnim>();
         List<FilmHrany> hraneFilmy = new ArrayList<FilmHrany>();
-       // List<Herci> herci = new ArrayList<Herci>();
+        List<Herec> herci = new ArrayList<Herec>();
+       /* SQLDatabaze sql = new SQLDatabaze();
 		
-		//System.out.println(mojeDatabazeH.getNazev());
-		
-		//String nazev;
-		//int rok;
-		//String reziser;
+		sql.connect();
+		sql.createTable();
+		System.out.println("Nacitani animaku...");
+		sql.nacteniAnimovane(animovaneFilmy);
+		System.out.println("Nacitani hranych...");
+		sql.nacteniHrane(hraneFilmy);
+		System.out.println("Hotovo");
+		sql.disconnect();
+        
+        */
+        
 		float hodnoceni;
-		
 		int volba;
 		boolean run=true;
-
 		while(run)
 		{
 			System.out.println("Vytejte v male databazi filmu.");
@@ -271,7 +280,8 @@ public class Test {
 			System.out.println("7 .. vyhledavani podle hercu");			//
 			System.out.println("8 .. ulozeni do souboru");				//
 			System.out.println("9 .. nacteni ze souboru");				//
-			System.out.println("10.. konec a ulozeni do SQL");   		
+			System.out.println("10.. herci kteri hrali ve vice filmech"); //  		
+			System.out.println("11.. konec a ulozeni do SQL"); 
 			
 			volba=pouzeCelaCisla(sc);
 			
@@ -329,9 +339,28 @@ public class Test {
 							herec= "";
 							herec=sc.nextLine();
 							System.out.println();
+							boolean je=false;
+							int id1=0;
+							
 							
 							if (herec!="") {
 								seznamhercu.add(herec);
+								
+								
+								for (Herec herecD : herci) {
+									if(herecD.jeVDatabazi(herec)){
+						               je=true;
+						                herci.get(id1).pridatFilm();
+						                break;
+						            }
+									id1++;
+								}
+								if(je==false) {
+									herci.add(new Herec(herec,1));
+								}
+								
+								
+								
 							}
 							
 						}while(herec!="");
@@ -348,7 +377,7 @@ public class Test {
 						
 					}
 					
-					 }
+					 }else System.out.println("film uz je v databazi");
 					
 					
 					System.out.println("-1-----------------------------------");
@@ -425,7 +454,7 @@ public class Test {
 					
 //----333333333333333333333333333333333333-----------------------------------------------------------------------------------------
 				
-				case 4://přidání hodnocení
+				case 4:
 					
 					int id4=0;
 					Boolean n4= false;
@@ -464,6 +493,7 @@ public class Test {
 						if (n4==true) {
 							
 							hraneFilmy.get(id4).setHodnoceni(sc);
+							
 				            System.out.print("Chceš zadat slovní hodnocení? \n 1 ANO \n 2 NE");
 				            druh = Test.pouzeCelaCisla(sc);
 				            koš=sc.nextLine();
@@ -598,7 +628,7 @@ public class Test {
 						druh=0; 
 						boolean n8=false;
 						int id8 = 0;
-						
+						koš=sc.nextLine();
 						System.out.println("Zadejte nazev filmu který chcete uložit");
 						 nazev=sc.nextLine();
 						 
@@ -686,6 +716,8 @@ public class Test {
 			        try {
 			            FileReader reader = new FileReader(nazev9+".txt");
 			            BufferedReader bufferedReader = new BufferedReader(reader);
+			            boolean je9=false;
+			            int id9=0;
 
 			            String line;
 			            while ((line = bufferedReader.readLine()) != null) {
@@ -701,7 +733,21 @@ public class Test {
 			               System.out.println(druh9);
 			               System.out.println(nazev9);
 			                for(int i=6; i<data.length;i++) {
-			                seznamhercu9.add(data[i]);	
+			                seznamhercu9.add(data[i]);
+			                
+			                
+			                for (Herec herecD : herci) {
+								if(herecD.jeVDatabazi(data[i])){
+					               je9=true;
+					                herci.get(id9).pridatFilm();
+					                break;
+					            }
+								id9++;
+							}
+							if(je9==false) {
+								herci.add(new Herec(data[i],1));
+							}
+
 			                }
 			                
 			            }
@@ -712,7 +758,7 @@ public class Test {
 					                break;
 					            }
 							}
-				            	if (n9==true)
+				            	if (n9!=true)
 								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9));
 								
 							}else {
@@ -722,7 +768,7 @@ public class Test {
 						                break;
 						            }
 								}
-								if (n9==true)
+								if (n9!=true)
 								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9));
 							}
 			            
@@ -740,10 +786,37 @@ public class Test {
 //----99999999999999999999999999999999-----------------------------------------------------------------------------------------					
 					break;
 					
+				case 10:
+					
+					System.out.println("herci kteří hráli ve více filmech: ");
+					druh=0; 
+					for (Herec herec : herci) {
+                        if(herec.getPocetFilmu()>1){
+                            Herec.vypsatFilmy(animovaneFilmy, hraneFilmy, herec.getJmeno());
+                        }
+                    }
+					System.out.println("-10-----------------------------------");
+					
+				break;
 				default:
+					/*
+					sql.connect();
+					sql.dropTable("animovane");
+					sql.dropTable("hrane");
+					sql.createTable();
 					
 					
-					
+					System.out.println("Ukladani animovanych filmu...");
+					seznamAnimaku.ulozeniDatabaze(sql);
+					System.out.println("Ukladani hranych filmu...");
+					seznamHra.ulozeniDatabaze(sql);
+					System.out.println("Ukladani hodnoceni filmu...");
+					seznamHodnoceni.ulozeniDatabaze(sql);
+					System.out.println("Ukladani hercu...");
+					seznamHercu.ulozeniDatabaze(sql);
+					sql.disconnect();
+					System.out.println("Hotovo.");
+					*/
 					run=false;
 					break;
 			}

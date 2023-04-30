@@ -9,11 +9,9 @@ import java.util.Scanner;
 
 public class FilmHrany extends ImgFilm{
 	List<String>SeznamHercu;
-	//List<String>SeznamHodnoceni;
 	private float Hodnoceni;
     private String SlovHod;
 
-	//HODNOCENÍ PŘEDĚLAT NA LIST
 
 	public FilmHrany(){
 	}
@@ -43,7 +41,6 @@ public class FilmHrany extends ImgFilm{
 	
 	@Override
 	public String getNazev() {
-		//System.out.println("Pouzita override metoda");
 		return nazev;
 	}
 

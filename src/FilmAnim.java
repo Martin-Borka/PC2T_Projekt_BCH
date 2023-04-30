@@ -37,7 +37,6 @@ public class FilmAnim extends ImgFilm{
 	
 	
 	public String getNazev() {
-		//System.out.println("Pouzita override metoda");
 		return nazev;
 	}
 

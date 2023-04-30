@@ -6,15 +6,6 @@ public abstract class ImgFilm {
 	 String reziser;
 	
 	    
-
-	
-/*	public ImgFilm(String nazev, int rok, String reziser)
-	{
-		this.nazev=nazev;
-		this.rok=rok;
-		this.reziser=reziser;
-	}*/
-	
 	 public String filmToString()
 	    {
 	        return(
@@ -55,25 +46,6 @@ public abstract class ImgFilm {
         );
     }
 	
-	
-	
-	
-	/*
-	public float getStudijniPrumer() {
-		return studijniPrumer;
-	}
-
-	public boolean setStudijniPrumer(float studijniPrumer) {
-		if (studijniPrumer<1||studijniPrumer>5)
-		{
-			System.out.println("Chybny prumer");
-			return false;
-		}
-		this.studijniPrumer = studijniPrumer;
-		return true;
-	}
-	private float studijniPrumer;
-*/
 	
 	
 }
