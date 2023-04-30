@@ -15,15 +15,16 @@ import org.w3c.dom.Text;
 public class Test {
 
 	
-	/*
-	public static void upravafilmu() {
+	
+	public static void upravafilmu(List<FilmAnim> animovaneFilmy, List<FilmHrany> hraneFilmy) {
 		
 		//public static void upravFilm(List<FilmAnimovany> animovaneFilmy, List<FilmHrany> hraneFilmy)
 	        String nazev;
 	        String herec;
 	        int volba;
+	        String kos;
 	        Scanner sc= new Scanner(System.in);
-	        System.out.print("    Zadej název filmu: ");
+	        System.out.println("Zadej název filmu: ");
 	        nazev=sc.nextLine();
 	        int i = 0;
 	        int nalezeno = 0;
@@ -34,10 +35,10 @@ public class Test {
 	                break;
 	            }
 	            i++;
-	            }
+	         }
 	            if(nalezeno==0){
 	            	i = 0;
-	                for (FilmAnimovany film : animovaneFilmy) {
+	                for (FilmAnim film : animovaneFilmy) {
 	                     if(film.getNazev().equals(nazev)){
 	                      nalezeno = 2;
 	                        break;
@@ -45,25 +46,24 @@ public class Test {
 	                i++;
 	                 }
 	                 }
+	            
+	            
 	        switch(nalezeno)
 	             {
 	                    case 1:
-	                        System.out.print(
-	                            "[1]   Upravit název\n"+
-	                            "[2]   Upravit režiséra\n"+
-	                            "[3]   Upravit rok vydání\n"+
-	                            "[4]   Upravit seznam herců\n"+
-	                            "[5]   Upravit hodnocení\n"+
-	                            "[0]   Hotovo\n"+
-	                            "    Vyber akci: ");
-	                        volba=InputChecker.getInt(sc);
+	                        System.out.println(
+	                            "1   Upravit název \n2   Upravit režiséra \n3   Upravit rok vydání \n4   Upravit seznam herců \n5   Upravit hodnocení \n6   Hotovo\n");
+	                        
+	                        volba=Test.pouzeCelaCisla(sc);
+	                        kos=sc.nextLine();
+	                        
 	                        while(volba!=0&&volba!=9){
 	                        FilmHrany vybranyFilm = hraneFilmy.get(i);
 	                        switch(volba){
 	                        case 1:
 	                            System.out.print("    Současný název "+vybranyFilm.getNazev()+"\n    Nový název: ");
 	                            nazev=sc.nextLine();
-	                            if(InputChecker.dotupnyNazev(nazev, hraneFilmy, animovaneFilmy)){
+	                            if(ctecka.dotupnyNazev(nazev, hraneFilmy, animovaneFilmy)){
 	                                vybranyFilm.setNazev(nazev);
 	                            }
 	                            else{
@@ -71,12 +71,12 @@ public class Test {
 	                            }
 	                        break;
 	                        case 2:
-	                            System.out.print("    Současný režisér "+vybranyFilm.getNazev()+"\n    Nový režisér: ");
-	                            vybranyFilm.setReziser(sc.nextLine());
+	                            System.out.print("    Současný režisér "+vybranyFilm.getReziserH()+"\n    Nový režisér: ");
+	                            vybranyFilm.setReziserH(sc.nextLine());
 	                        break;
 	                        case 3:
-	                            System.out.print("    Současný rok vydání "+vybranyFilm.getNazev()+"\n    Nový rok vydání: ");
-	                            vybranyFilm.setRokVydani(InputChecker.getInt(sc));
+	                            System.out.print("    Současný rok vydání "+vybranyFilm.getRok()+"\n    Nový rok vydání: ");
+	                            vybranyFilm.setRok(Test.pouzeCelaCisla(sc));
 	                        break;
 	                        case 4:
 	                            if(vybranyFilm.SeznamHercu!=null);
@@ -87,11 +87,11 @@ public class Test {
 	                            }
 	                            List<String> novySeznamHercu = new ArrayList<String>();
 	                            System.out.print("    Zadej jméno herce (pro ukončení zápisu zadej 0)");
-	                            herec = InputChecker.upravJmeno(sc.nextLine());
+	                            herec = ctecka.upravJmeno(sc.nextLine());
 	                            while(!herec.equals("0")){
 	                                novySeznamHercu.add(herec);
 	                                System.out.print("    Zadej jméno herce (pro ukončení zápisu zadej 0)");
-	                                herec = InputChecker.upravJmeno(sc.nextLine());
+	                                herec = ctecka.upravJmeno(sc.nextLine());
 	                            }
 	                            vybranyFilm.setSeznamHercu(novySeznamHercu);
 	                        break;
@@ -99,14 +99,13 @@ public class Test {
 	                            System.out.println("    Současné hodnocení "+vybranyFilm.getHodnoceni());
 	                            vybranyFilm.setHodnoceni(sc);
 	                            System.out.print(
-	                            "    Chceš zadat slovní hodnocení?\n"+
-	                            "[1]   Ano\n"+
-	                            "[2]   Ne\n"+
-	                            "    Vyber akci: ");
-	                            volba=InputChecker.getInt(sc);
+	                            "    Chceš zadat slovní hodnocení?\n1   Ano\n2   Ne\n");
+	                            
+	                            volba=Test.pouzeCelaCisla(sc);
+	                            kos=sc.nextLine();
 	                            if(volba ==1){
 	                                System.out.print("    Zadej slovní hodnocení: ");
-	                                vybranyFilm.setSlovniHodnoceni(sc.nextLine());
+	                                vybranyFilm.setSlovHod(sc.nextLine());
 	                            }
 	                        break;
 	                        case 0:
@@ -115,43 +114,33 @@ public class Test {
 	                        case 9:
 	                        break;
 	                        }
-	                        System.out.print(
-	                            "[1]   Upravit název\n"+
-	                            "[2]   Upravit režiséra\n"+
-	                            "[3]   Upravit rok vydání\n"+
-	                            "[4]   Upravit seznam herců\n"+
-	                            "[5]   Upravit hodnocení\n"+
-	                            "[0]   Hotovo\n"+
-	                            "[9]   Zrušit změny\n"+
-	                            "    Vyber akci: ");
-	                        volba=InputChecker.getInt(sc);
-	                    }
+	                        System.out.println(
+	                            "1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n0   Hotovo\n9   Zrušit změny\n");
+	                        
+	                        volba=Test.pouzeCelaCisla(sc);
+	                        kos=sc.nextLine();
+	                    }  
 	                break;
+	                
 	                case 2:
-	                    System.out.print(
-	                            "[1]   Upravit název\n"+
-	                            "[2]   Upravit režiséra\n"+
-	                            "[3]   Upravit rok vydání\n"+
-	                            "[4]   Upravit seznam herců\n"+
-	                            "[5]   Upravit hodnocení\n"+
-	                            "[6]   Upravit Doporučný věk\n"+
-	                            "[0]   Hotovo\n"+
-	                            "    Vyber akci: ");
-	                    volba=InputChecker.getInt(sc);
+	                    System.out.println("1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n6   Upravit Doporučný věk\n0   Hotovo\n9   Zrušit změny\n");
+                        
+	                    volba=Test.pouzeCelaCisla(sc);
+	                    kos=sc.nextLine();
 	                        while(volba!=0&&volba!=9){
-	                    FilmAnimovany vybranyFilm = animovaneFilmy.get(i);
+	                    FilmAnim vybranyFilm = animovaneFilmy.get(i);
 	                    switch(volba){
 	                    case 1:
 	                        System.out.print("    Současný název "+vybranyFilm.getNazev()+"\n    Nový název: ");
 	                        vybranyFilm.setNazev(sc.nextLine());
 	                    break;
 	                    case 2:
-	                        System.out.print("    Současný režisér "+vybranyFilm.getNazev()+"\n    Nový režisér: ");
-	                        vybranyFilm.setReziser(sc.nextLine());
+	                        System.out.print("    Současný režisér "+vybranyFilm.getReziserA()+"\n    Nový režisér: ");
+	                        vybranyFilm.setReziserA(sc.nextLine());
 	                    break;
 	                    case 3:
-	                        System.out.print("    Současný rok vydání "+vybranyFilm.getNazev()+"\n    Nový rok vydání: ");
-	                        vybranyFilm.setRokVydani(InputChecker.getInt(sc));
+	                        System.out.print("    Současný rok vydání "+vybranyFilm.getRok()+"\n    Nový rok vydání: ");
+	                        vybranyFilm.setRok(Test.pouzeCelaCisla(sc));
 	                    break;
 	                    case 4:
 	                        if(vybranyFilm.SeznamHercu!=null);
@@ -162,11 +151,11 @@ public class Test {
 	                        }
 	                        List<String> novySeznamHercu = new ArrayList<String>();
 	                        System.out.print("    Zadej jméno animátora (pro ukončení zápisu zadej 0)");
-	                        herec = InputChecker.upravJmeno(sc.nextLine());
+	                        herec = ctecka.upravJmeno(sc.nextLine());
 	                        while(!herec.equals("0")){
 	                            novySeznamHercu.add(herec);
 	                            System.out.print("    Zadej jméno animátora (pro ukončení zápisu zadej 0)");
-	                            herec = InputChecker.upravJmeno(sc.nextLine());
+	                            herec = ctecka.upravJmeno(sc.nextLine());
 	                        }
 	                        vybranyFilm.setSeznamHercu(novySeznamHercu);
 	                    break;
@@ -174,19 +163,17 @@ public class Test {
 	                        System.out.println("    Současné hodnocení "+vybranyFilm.getHodnoceni());
 	                        vybranyFilm.setHodnoceni(sc);
 	                        System.out.print(
-	                        "    Chceš zadat slovní hodnocení?\n"+
-	                        "[1]   Ano\n"+
-	                        "[2]   Ne\n"+
-	                        "    Vyber akci: ");
-	                        volba=InputChecker.getInt(sc);
+	                        "    Chceš zadat slovní hodnocení?\n1   Ano\n2   Ne\n");
+	                        volba=Test.pouzeCelaCisla(sc);
+	                        kos=sc.nextLine();
 	                        if(volba ==1){
 	                            System.out.print("    Zadej slovní hodnocení: ");
-	                            vybranyFilm.setSlovniHodnoceni(sc.nextLine());
+	                            vybranyFilm.setSlovHod(sc.nextLine());
 	                        }
 	                    break;
 	                    case 6:
 	                        System.out.print("    Současný doporučený věk diváka "+vybranyFilm.getNazev()+"\n    Nový doporučený věk diváka: ");
-	                        vybranyFilm.setDoporucenyVek(InputChecker.getInt(sc));
+	                        vybranyFilm.setVek(Test.pouzeCelaCisla(sc));
 	                    break;
 	                    case 0:
 	                        animovaneFilmy.set(i, vybranyFilm);
@@ -194,27 +181,19 @@ public class Test {
 	                    case 9:
 	                    break;
 	                    }
-	                    System.out.print(
-	                        "[1]   Upravit název\n"+
-	                        "[2]   Upravit režiséra\n"+
-	                        "[3]   Upravit rok vydání\n"+
-	                        "[4]   Upravit seznam herců\n"+
-	                        "[5]   Upravit hodnocení\n"+
-	                        "[6]   Upravit Doporučný věk\n"+
-	                        "[0]   Hotovo\n"+
-	                        "[9]   Zrušit změny\n"+
-	                        "    Vyber akci: ");
-	                    volba=InputChecker.getInt(sc);
+	                    System.out.println("1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n6   Upravit Doporučný věk\n0   Hotovo\n9   Zrušit změny\n");
+                        
+	                    volba=Test.pouzeCelaCisla(sc);
+	                    kos=sc.nextLine();
 	                }
 	            break;
 	            case 0:
-	                System.out.println("    Film nenalezen");
+	                System.out.println("Film nenalezen");
 	            break;
 	        }
 	    
 	}
 	
-	*/
 	
 //---------------------------------------------------	
 	//čtení
@@ -265,7 +244,7 @@ public class Test {
 		
 		List<FilmAnim> animovaneFilmy = new ArrayList<FilmAnim>();
         List<FilmHrany> hraneFilmy = new ArrayList<FilmHrany>();
-        List<Herci> herci = new ArrayList<Herci>();
+       // List<Herci> herci = new ArrayList<Herci>();
 		
 		//System.out.println(mojeDatabazeH.getNazev());
 		
@@ -282,7 +261,7 @@ public class Test {
 			System.out.println("Vytejte v male databazi filmu.");
 			System.out.println("Vyberte pozadovanou cinnost:");
 			System.out.println("1 .. vlozeni noveho filmu");			//
-			System.out.println("2 .. upravu jednoho filmu");			
+			System.out.println("2 .. upravu jednoho filmu");			//
 			System.out.println("3 .. smazani filmu");					//
 			System.out.println("4 .. přidani hodnoceni ");				// slovně
 			System.out.println("5 .. vypis vsech filmu ");				//
@@ -371,11 +350,8 @@ public class Test {
 //----111111111111111111111111111111111111111111111-----------------------------------------------------------------------------------------
 					
 				case 2://uprava filmu !!!!!!!!!!!!!!!!!!!!!!!
-					System.out.printf("Zadejte kategorii pro upravu filmu: \n 1 pro hrane \n 2 pro animovane \n ");
-					druh=Test.pouzeCelaCisla(sc);
 					
-					
-					
+					upravafilmu( animovaneFilmy, hraneFilmy);
 
 					break;
 //----22222222222222222222222222222222222222-----------------------------------------------------------------------------------------
@@ -655,30 +631,7 @@ public class Test {
 						else {
 							System.out.println("Tato moznost prozatim neni");
 							break;
-						}	/*
-								
-								try {
-								
-								fw = new FileWriter(vystupniSoubor);
-								out = new BufferedWriter(fw);
-								out.write(new String(prvkyDatabaze.get(film).getTyp()+"\n"));
-								out.write(new String(prvkyDatabaze.get(film).getNazev()+"\n"));
-								out.write(new String(prvkyDatabaze.get(film).getRok()+"\n"));
-								out.write(new String(prvkyDatabaze.get(film).getReziser()+"\n"));
-								out.write(new String(String.valueOf(pocetHodnoceni)+"\n"));
-								if(pocetHodnoceni > 0) {
-									out.write(new String(seznamHodnoceni.getHodnoceniFilmu(film)));
-									 }
-								out.write(new String(String.valueOf(pocetHercu)+"\n"));
-								if(pocetHercu > 0) {
-									out.write(new String(seznamHercu.getHercikFilmu(film)));
-								}
-								out.close();
-								fw.close();
-								
-								}
-								*/
-							
+						}	
 						System.out.println("-8-----------------------------------");
 //----888888888888888888888888888888888-----------------------------------------------------------------------------------------
 					break;
@@ -754,7 +707,11 @@ public class Test {
 			        System.out.println("-9-----------------------------------");
 //----99999999999999999999999999999999-----------------------------------------------------------------------------------------					
 					break;
+					
 				default:
+					
+					
+					
 					run=false;
 					break;
 			}

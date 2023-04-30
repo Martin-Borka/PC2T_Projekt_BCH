@@ -28,6 +28,7 @@ public class FilmAnim extends ImgFilm{
 	public FilmAnim(String nazev, int rok, int vek, String reziser, List<String>seznamHercu,float hodnoceni){
 		this.nazev=nazev;
 		this.rok=rok;
+		this.vek=vek;
 		this.reziser=reziser;
 		this.SeznamHercu= seznamHercu;
 		this.Hodnoceni= hodnoceni;
@@ -79,6 +80,14 @@ public class FilmAnim extends ImgFilm{
         this.nazev = nazev;
     }
 
+    public void setVek(int vek) {
+    	this.vek=vek;
+    }
+    
+    public int getVek() {
+    	return vek;
+    }
+    
     public int getRok() {
         return rok;
     }
@@ -104,7 +113,9 @@ public class FilmAnim extends ImgFilm{
         setHodnoceni(sc);
     }
     
-    
+    public float getHodnoceni() {
+        return Hodnoceni;
+    }
     
     public void setSlovHod(String slovHod)
     {
@@ -122,5 +133,13 @@ public class FilmAnim extends ImgFilm{
         }
         
         return("2:"+super.filmToSave()+":"+Float.toString(Hodnoceni)+":"+Integer.toString(vek)+herci);
+    }
+    
+    public List<String> getSeznamHercu() {
+        return SeznamHercu;
+    }
+
+    public void setSeznamHercu(List<String> seznamHercu) {
+        this.SeznamHercu = seznamHercu;
     }
 }

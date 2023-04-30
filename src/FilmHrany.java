@@ -112,6 +112,9 @@ public class FilmHrany extends ImgFilm{
         setHodnoceni(sc);
     }
 	
+    public float getHodnoceni() {
+        return Hodnoceni;
+    }
     
     public String getSlovHod() {
 		return SlovHod;
@@ -123,12 +126,13 @@ public class FilmHrany extends ImgFilm{
     }
     
     
-    
-    
-    /*public String getInfoToSave() {
-        return nazev + ": " + rok + ": " + SeznamHercu + ": " +Hodnoceni;
-    }*/
-   
+    public List<String> getSeznamHercu() {
+        return SeznamHercu;
+    }
+
+    public void setSeznamHercu(List<String> seznamHercu) {
+        this.SeznamHercu = seznamHercu;
+    }
     
     public String filmToSave()
     {

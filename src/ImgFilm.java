@@ -39,9 +39,9 @@ public abstract class ImgFilm {
 		return reziser;
 	}
 	
-	public String getVek()
+	public int getVek()
 	{
-		return reziser;
+		return vek;
 	}
 
 	
