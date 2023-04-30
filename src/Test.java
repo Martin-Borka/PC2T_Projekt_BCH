@@ -114,6 +114,7 @@ public class Test {
 	                        case 9:
 	                        break;
 	                        }
+	                        System.out.println("------------------------------------");
 	                        System.out.println(
 	                            "1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n0   Hotovo\n9   Zrušit změny\n");
 	                        
@@ -181,6 +182,7 @@ public class Test {
 	                    case 9:
 	                    break;
 	                    }
+	                    System.out.println("------------------------------------");
 	                    System.out.println("1   Upravit název\n2   Upravit režiséra\n3   Upravit rok vydání\n4   Upravit seznam herců\n5   Upravit hodnocení\n6   Upravit Doporučný věk\n0   Hotovo\n9   Zrušit změny\n");
                         
 	                    volba=Test.pouzeCelaCisla(sc);
@@ -298,16 +300,12 @@ public class Test {
 					boolean jeVDatabazi=false;
 
 
-					if (druh==1) {
-						
-					}
-					else{
-						
+					if (druh!=1) {
 						System.out.println("Zadejte doporuceny vek");
 						vek=Test.pouzeCelaCisla(sc);
 						koš = sc.nextLine();
-						
 					}
+					
 					
 					
 					if (jeVDatabazi == false) {
@@ -315,8 +313,13 @@ public class Test {
 						List<String> seznamhercu=new ArrayList<String>();
 						do{
 						
-							
+							if (druh==1) {
 								System.out.println("Zadejte dalšího herce (pokud ne, nic nepiš)");
+							}
+							else{
+								System.out.println("Zadejte dalšího animatora (pokud ne, nic nepiš)");
+							}
+								
 						
 							herec= "";
 							herec=sc.nextLine();
@@ -352,31 +355,45 @@ public class Test {
 				case 2://uprava filmu !!!!!!!!!!!!!!!!!!!!!!!
 					
 					upravafilmu( animovaneFilmy, hraneFilmy);
-
+					System.out.println("-2-----------------------------------");
 					break;
 //----22222222222222222222222222222222222222-----------------------------------------------------------------------------------------
 					
 				case 3://smazani filmu
-					System.out.println("Zadejte druh filmu který chcete odebrat:\n 1 pro hrane \n 2 pro animovane");
+					
 					druh=0; 
 					boolean n=false;
 					int id = 0;
+					druh=0;
 					
-					druh=Test.pouzeCelaCisla(sc);
+					System.out.println("Zadejte nazev filmu ktery chcete odebrat");
 					
-					System.out.println("Zadejte nazev filmu");
-					 nazev=sc.nextLine();
 					 nazev=sc.nextLine();
 					 
 					
-					if (druh==1) {
-						for (FilmHrany film : hraneFilmy) {
+					 for (FilmHrany film : hraneFilmy) {
 							if(film.getNazev().equals(nazev)){
 				                n = true;
+				                druh=1;
 				                break;
 				            }
 				            id++;
 						}
+				            if(n==false){
+				            	for (FilmAnim film : animovaneFilmy) {
+									if(film.getNazev().equals(nazev)){
+						                n = true;
+						                druh=2;
+						                break;
+						            }
+						            id++;
+								
+								}
+				                 }
+					 
+					 
+					if (druh==1) {
+						
 						if (n==false) {
 							System.out.println("Film nebyl nalezen");
 							break;
@@ -385,14 +402,7 @@ public class Test {
 						System.out.println("Hrany film byl odebrán");
 					}
 					else if(druh==2){
-						for (FilmAnim film : animovaneFilmy) {
-							if(film.getNazev().equals(nazev)){
-				                n = true;
-				                break;
-				            }
-				            id++;
 						
-						}
 						if (n==false) {
 							System.out.println("Film nebyl nalezen");
 							break;
@@ -414,27 +424,44 @@ public class Test {
 					
 					int id4=0;
 					Boolean n4= false;
-					System.out.println("Zadejte druh filmu kteremu chcete přidat hodnoceni:\n 1 pro hrane \n 2 pro animovane");
-					druh=0; 
-					druh = Test.pouzeCelaCisla(sc);
 					
-					System.out.println("Zadejte nazev filmu");
-					 nazev=sc.nextLine();
+					druh=0; 
+					
+					
+					System.out.println("Zadejte nazev filmu kteremu chcete přidat hodnoceni");
+					
 					 nazev=sc.nextLine();
 					 
-					if(druh==1){
-						for (FilmHrany film : hraneFilmy) {
+					 
+					 for (FilmHrany film : hraneFilmy) {
 							if(film.getNazev().equals(nazev)){
 				                n4 = true;
+				                druh=1;
 				                break;
 				            }
 				            id4++;
 						}
+				            if(n4==false){
+				            	for (FilmAnim film : animovaneFilmy) {
+									if(film.getNazev().equals(nazev)){
+						                n4 = true;
+						                druh=2;
+						                break;
+						            }
+						            id4++;
+								
+								}
+				                 }
+					 
+					 
+					if(druh==1){
+						
 						if (n4==true) {
 							
 							hraneFilmy.get(id4).setHodnoceni(sc);
 				            System.out.print("Chceš zadat slovní hodnocení? \n 1 ANO \n 2 NE");
 				            druh = Test.pouzeCelaCisla(sc);
+				            koš=sc.nextLine();
 				           
 				            if(volba ==1){
 				                System.out.print("    Zadej slovní hodnocení: ");
@@ -447,19 +474,12 @@ public class Test {
 					
 					
 					else if(druh==2){
-							
-						for (FilmAnim film : animovaneFilmy) {
-								if(film.getNazev().equals(nazev)){
-					                n4 = true;
-					                break;
-					            }
-					            id4++;
-							}
 							if (n4==true) {
 								
 								animovaneFilmy.get(id4).setHodnoceni(sc);
 					            System.out.print("Chceš zadat slovní hodnocení? \n 1 ANO \n 2 NE");
 					            druh = Test.pouzeCelaCisla(sc);
+					            koš=sc.nextLine();
 					           
 					            if(volba ==1){
 					                System.out.print("    Zadej slovní hodnocení: ");
@@ -470,16 +490,7 @@ public class Test {
 							else 
 								System.out.println("nebyl nalezen");
 						}
-						
-							
 					
-					//DatabazeHodoceni.setHodnoceni()
-					
-					
-					 
-			            
-			            
-
 						System.out.println("-4-----------------------------------");
 					break;
 //----444444444444444444444444444444444-----------------------------------------------------------------------------------------
@@ -501,22 +512,36 @@ public class Test {
 					int id6=0;
 					Boolean n6= false;
 					String vyhled6 = "";
-					System.out.println("Zadejte druh filmu který chcete vyhledat: \n 1 pro hrane \n 2 pro animovane");
-					druh=0; 
-					druh = Test.pouzeCelaCisla(sc);
 					
-					System.out.println("Zadejte nazev filmu");
-					 nazev=sc.nextLine();
+					druh=0; 
+					System.out.println("Zadejte nazev filmu který chcete najít");
 					 nazev=sc.nextLine();
 					 
-					if(druh==1){
-						for (FilmHrany film : hraneFilmy) {
+					 
+					 
+					 for (FilmHrany film : hraneFilmy) {
 							if(film.getNazev().equals(nazev)){
 				                n6 = true;
+				                druh=1;
 				                break;
 				            }
 				            id6++;
 						}
+				            if(n6==false){
+				            	for (FilmAnim film : animovaneFilmy) {
+									if(film.getNazev().equals(nazev)){
+						                n6 = true;
+						                druh=2;
+						                break;
+						            }
+						            id6++;
+								
+								}
+				                 }
+					 
+					 
+					if(druh==1){
+						
 						if (n6==false) {
 							vyhled6 = "nebyl nalezen";
 						}
@@ -527,14 +552,6 @@ public class Test {
 					
 	//-------------------
 						else if(druh==2){
-						
-						for (FilmAnim film : animovaneFilmy) {
-							if(film.getNazev().equals(nazev)){
-				                n6 = true;
-				                break;
-				            }
-				            id6++;
-						}
 						if (n6==false) {
 							vyhled6 = " nebyl nalezen";
 						}
@@ -572,22 +589,38 @@ public class Test {
 					break;
 				case 8:
 					
-					 System.out.println("Zadejte druh filmu který chcete ulozit:\n 1 pro hrane \n 2 pro animovane");
+					 
 						druh=0; 
 						boolean n8=false;
 						int id8 = 0;
-						druh=Test.pouzeCelaCisla(sc);
-						System.out.println("Zadejte nazev filmu");
+						
+						System.out.println("Zadejte nazev filmu který chcete uložit");
 						 nazev=sc.nextLine();
-						 nazev=sc.nextLine();
-						if (druh==1) {
-							for (FilmHrany film : hraneFilmy) {
+						 
+						 
+						 
+						 for (FilmHrany film : hraneFilmy) {
 								if(film.getNazev().equals(nazev)){
 					                n8 = true;
+					                druh=1;
 					                break;
 					            }
 					            id8++;
 							}
+						  if(n8==false){
+					            	for (FilmAnim film : animovaneFilmy) {
+										if(film.getNazev().equals(nazev)){
+							                n8 = true;
+							                druh=2;
+							                break;
+							            }
+							            id8++;
+									
+									}
+					                 }
+						 
+						if (druh==1) {
+							
 							if (n8==false) {
 								System.out.println("Film nebyl nalezen");
 								break;
@@ -605,13 +638,7 @@ public class Test {
 						        }
 						}
 						else if(druh==2){
-							for (FilmAnim film : animovaneFilmy) {
-								if(film.getNazev().equals(nazev)){
-					                n8 = true;
-					                break;
-					            }
-					            id8++;
-							}
+							
 							if (n8==false) {
 								System.out.println("Film nebyl nalezen");
 								break;
