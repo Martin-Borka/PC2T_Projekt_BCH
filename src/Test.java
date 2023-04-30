@@ -292,6 +292,11 @@ public class Test {
 					System.out.println("Zadejte nazev filmu");
 					 nazev=sc.nextLine();
 					 nazev=sc.nextLine();
+					 
+					 
+					 if(ctecka.dotupnyNazev(nazev, hraneFilmy, animovaneFilmy)) {
+					 
+					 
 					System.out.println("Zadejte rok vydani (cislo)");
 					rok=Test.pouzeCelaCisla(sc);
 					System.out.println("Zadejte Rezisera");
@@ -343,7 +348,7 @@ public class Test {
 						
 					}
 					
-					
+					 }
 					
 					
 					System.out.println("-1-----------------------------------");
