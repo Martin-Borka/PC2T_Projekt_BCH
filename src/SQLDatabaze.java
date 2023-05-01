@@ -7,250 +7,151 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLDatabaze {
 
-	SQLDatabaze(){
-	}
-	
-	private Connection conn;
-	public boolean connect() {
-		conn = null;
-		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:databazeProjekt.db");
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage());
-			return false;
-		}
-		return true;
-	}
-	
-	
-	
-	
-	public void disconnect() {
-		if(conn != null) {
-			try {
-				conn.close();
-			}
-			catch(SQLException ex) {
-				System.out.println(ex.getMessage());
-			}
-		}
-	}
-	
-	
-	
-	public boolean dropTable(String nazev){
-		if(conn==null)
-			return false;
-		String sql = "DROP TABLE IF EXISTS "+nazev+";";
-		try {
-			Statement stmt = conn.createStatement();
-			stmt.execute(sql);
-			return true;
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
-		return false;
-	}
-	//--------------------------------------------------------------------------------
-	
-	public boolean createTable() {
-		if(conn==null)
-			return false;
-		String sql  = "CREATE TABLE IF NOT EXISTS animovane("+" id INTEGER,"+"nazev TEXT,"+"typ TEXT,"+"reziser TEXT,"+"rokVydani real,"+"doporucenyVek real,"+"hodnoceni real,"+"PRIMARY KEY (id)"+");";
-		String sql2 = "CREATE TABLE IF NOT EXISTS hrane("+" id INTEGER,"+"nazev TEXT,"+"typ TEXT,"+"reziser TEXT,"+"rokVydani real,"+"hodnoceni real,"+"PRIMARY KEY (id)"+");";
-		//String sql3 = "CREATE TABLE IF NOT EXISTS hodnoceni("+" id INTEGER,"+"film TEXT,"+"typ TEXT,"+"slovniHodnoceni TEXT,"+"bodoveHodnoceni real,"+"PRIMARY KEY (id)"+");";
-		String sql4 = "CREATE TABLE IF NOT EXISTS herciH("+" id INTEGER,"+"film TEXT,"+"jmeno TEXT,"+"druh INTEGER,"+"PRIMARY KEY (id)"+");";
-		String sql5 = "CREATE TABLE IF NOT EXISTS herciA("+" id INTEGER,"+"film TEXT,"+"jmeno TEXT,"+"druh INTEGER,"+"PRIMARY KEY (id)"+");";
-		try {
-			Statement stmt = conn.createStatement();
-			stmt.execute(sql);
-			stmt.execute(sql2);
-			stmt.execute(sql5);
-			stmt.execute(sql4);
-			return true;
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
-		return false;
-	}
-	
-	public void vlozeniAnimovany(String nazev, String typ, String reziser, int rokVydani, int doporucenyVek, float hodnoceni) {
-		String sql = "INSERT INTO animovane(nazev, typ, reziser, rokVydani, doporucenyVek, hodnoceni) VALUES(?,?,?,?,?,?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, nazev);
-			pstmt.setString(2, typ);
-			pstmt.setString(3, reziser);
-			pstmt.setFloat(4, rokVydani);
-			pstmt.setFloat(5, doporucenyVek);
-			pstmt.setFloat(6, hodnoceni);
-			pstmt.executeUpdate();
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void vlozeniHrany(String nazev, String typ, String reziser, int rokVydani, float hodnoceni) {
-		String sql = "INSERT INTO hrane(nazev, typ, reziser, rokVydani, hodnoceni) VALUES(?,?,?,?,?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, nazev);
-			pstmt.setString(2, typ);
-			pstmt.setString(3, reziser);
-			pstmt.setFloat(4, rokVydani);
-			pstmt.setFloat(5, hodnoceni);
-			pstmt.executeUpdate();
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	/*
-	public void vlozeniHodnoceni(String film, String typ, String slovniHodnoceni, int bodoveHodnoceni) {
-		String sql = "INSERT INTO hodnoceni(film, typ, slovniHodnoceni, bodoveHodnoceni) VALUES(?,?,?,?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, film);
-			pstmt.setString(2, typ);
-			pstmt.setString(3, slovniHodnoceni);
-			pstmt.setFloat(4, bodoveHodnoceni);
-			pstmt.executeUpdate();
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	*/
-	public void vlozeniHerceH(String film, String jmeno,int druh) {
-		String sql = "INSERT INTO herci(film, jmeno, druh) VALUES(?,?,?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, film);
-			pstmt.setString(2, jmeno);
-			pstmt.setInt(3, druh);
-			pstmt.executeUpdate();
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void vlozeniHerceA(String film, String jmeno,int druh) {
-		String sql = "INSERT INTO herci(film, jmeno, druh) VALUES(?,?,?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, film);
-			pstmt.setString(2, jmeno);
-			pstmt.setInt(3, druh);
-			pstmt.executeUpdate();
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void vybratVsechno(){
-        String sql = "SELECT nazev, typ, reziser, rokVydani, doporucenyVek FROM animovane";
-        try {
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql);
-             while (rs.next()) {
-                		System.out.println(rs.getString("nazev") +  "\t" +  
-                		rs.getString("typ") + "\t" + 
-                		rs.getString("reziser") + "\t" + 
-                		rs.getFloat("rokVydani") + "\t" +
-                		rs.getFloat("doporucenyVek"));
+public class SQLDatabaze {
+    public static void nactiData(List<FilmAnim> animovanefilmy, List<FilmHrany> hranefilmy, List<Herec> herci)
+    {   try
+        {
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:Filmy.db";
+            Connection con = DriverManager.getConnection(url);
+            Statement statement = con.createStatement();
+            String query = "SELECT * FROM filmy";
+            ResultSet rs = statement.executeQuery(query);
+            while(rs.next())
+            {
+                int druh = rs.getInt(2);
+                if(druh == 1)//String nazev, int rok, String reziser, List<String>seznamHercu,float hodnoceni){
+                {
+                    String nazev = rs.getString(3);
+                    int rok = rs.getInt(4);
+                    String reziser = rs.getString(5);
+                    List<String> seznamHercu= new ArrayList<String>(); 
+                    String herciText = rs.getString(6);
+                    if(!herciText.equals("")){
+                    	
+                        for (String herec : herciText.split(":")){
+                            if(herec !=""){
+                                seznamHercu.add(herec);
+                                int id=0;
+                                boolean je=false;
+								for (Herec herecD : herci) {
+									if(herecD.jeVDatabazi(herec)){
+						               je=true;
+						                herci.get(id).pridatFilm();
+						                break;
+						            }
+									id++;
+								}
+								if(je==false) {
+									herci.add(new Herec(herec,1));
+								}
+                            }
+                        }
+                    }//------------------
+                    
+                    float hodnoceni = rs.getFloat(6);
+                    FilmHrany film =new FilmHrany(nazev, rok, reziser, seznamHercu, hodnoceni);//String nazev, int rok, String reziser, List<String>seznamHercu,float hodnoceni)
+                    hranefilmy.add(film);
+                }
+                else
+                {
+                    String nazev = rs.getString(3);
+                    int rok = rs.getInt(4);
+                    String reziser = rs.getString(5);
+                    List<String> seznamHercu= new ArrayList<String>(); 
+                    String herciText = rs.getString(6);
+                    for (String herec : herciText.split(":")){
+                        if(herec !=""){
+                            seznamHercu.add(herec);
+                            int id=0;
+                            boolean je=false;
+							for (Herec herecD : herci) {
+								if(herecD.jeVDatabazi(herec)){
+					               je=true;
+					                herci.get(id).pridatFilm();
+					                break;
+					            }
+								id++;
+							}
+							if(je==false) {
+								herci.add(new Herec(herec,1));
+							}
+                        }
+                    }
+                    int hodnoceni = rs.getInt(7);
+                    int doporucenyVek = rs.getInt(8);
+                    FilmAnim film =new FilmAnim(nazev, rok, doporucenyVek,reziser,seznamHercu ,hodnoceni);
+                    animovanefilmy.add(film);
+                }
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            con.close();
+        }catch (Exception e) {
+            System.err.println("Exception: " + e.getMessage());
         }
-	}
-	//----------------------------------------------------------------------------------------------
-	public void nacteniAnimovane(List<FilmAnim> seznamAnimovanych) {
-		String nazev;
-		String reziser;
-		int rokVydani;
-		int doporucenyVek;
-		float hodnoceni;
-		ArrayList<String> herci = null;
-		String sql = "SELECT nazev, typ, reziser, rok, vek, hodnoceni FROM animovane";
-		try {
-            Statement stmt  = conn.createStatement();
-            ResultSet rs    = stmt.executeQuery(sql);
-            while (rs.next()) {
-               		nazev = rs.getString("nazev");
-               		reziser = rs.getString("reziser");
-               		rokVydani = rs.getInt("rokVydani"); 
-               		doporucenyVek = rs.getInt("doporucenyVek");
-               		hodnoceni = rs.getFloat("hodnoceni");
-               		seznamAnimovanych.add(new FilmAnim(nazev,  rokVydani, doporucenyVek, reziser, herci ,hodnoceni));}
-            System.out.println("Animovane filmy nacteny.");
-       } catch (SQLException e) {
-           System.out.println(e.getMessage());
-       }
-	}
-	
-	public void nacteniHrane(List<FilmHrany> hraneFilmy) {
-		String nazev;
-		String reziser;
-		int rokVydani;
-		float hodnoceni;
-		ArrayList<String> herci = null;
-		String sql = "SELECT nazev, typ, reziser, rokVydani, hodnoceni FROM hrane";
-		try {
-            Statement stmt  = conn.createStatement();
-            ResultSet rs    = stmt.executeQuery(sql);
-            while (rs.next()) {
-               		nazev = rs.getString("nazev");
-               		reziser = rs.getString("reziser");
-               		rokVydani = rs.getInt("rokVydani"); 
-               		hodnoceni = rs.getFloat("hodnoceni");
-               		hraneFilmy.add(new FilmHrany(nazev, rokVydani, reziser, herci , hodnoceni));
+    }
+
+    public static void ulozData(List<FilmAnim> animovanefilmy, List<FilmHrany> hranefilmy){   
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:Filmy.db";
+            Connection con = DriverManager.getConnection(url);
+            String sql = "DELETE FROM filmy";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            sql = "INSERT INTO filmy (druh, nazev,  rok, reziser,herci, hodnoceni) VALUES (?, ?, ?, ?, ?, ?)";//String nazev, int rok, String reziser, List<String>seznamHercu,float hodnoceni){
+            statement = con.prepareStatement(sql); 
+            for (FilmHrany film : hranefilmy){
+                statement.setInt(1, 1);
+                statement.setString(2, film.getNazev());
+                statement.setInt(3, film.getRok());
+                statement.setString(4, film.getReziser());
+                statement.setFloat(6, film.getHodnoceni());
+                String herci = "";
+                if(!film.getSeznamHercu().isEmpty()){
+                    
+                        for (String jmeno : film.getSeznamHercu()) {
+                            herci+=jmeno+":";
+                        }
+                      statement.setString(5, herci);
+                }
+                else{
+                    statement.setString(5, "");
+                }
+                
+                statement.executeUpdate();
             }
-            System.out.println("Hrane filmy nacteny.");
-       } catch (SQLException e) {
-           System.out.println(e.getMessage());
-       }
-	}
-	
-	/*
-	 hmmmmmm proč mi to nefunguje
-	public void nacteniHercuH(FilmHrany seznamHercuH) {
-		String film;
-		String jmeno;
-		String sql = "SELECT typ, film, jmeno FROM herciH";
-		try {
-            Statement stmt  = conn.createStatement();
-            ResultSet rs    = stmt.executeQuery(sql);
-            while (rs.next()) {
-               		film = rs.getString("film");
-               		jmeno = rs.getString("jmeno");
-               		
-               		
-               		seznamHercu.addHerce(film, jmeno);
+            sql = "INSERT INTO filmy(druh,nazev,rok,reziser,herci,hodnoceni,vek)VALUES(?,?,?,?,?,?,?)";//String nazev, int rok, int vek, String reziser, List<String>seznamHercu,float hodnoceni)
+            statement = con.prepareStatement(sql); 
+            for (FilmAnim film : animovanefilmy) {
+                statement.setInt(1, 2);
+                statement.setString(2, film.getNazev());
+                statement.setInt(3, film.getRok());
+                statement.setString(4, film.getReziser());
+                statement.setFloat(6, film.getHodnoceni());
+                statement.setInt(7, film.getVek());
+                
+                String herci = "";
+                if(!film.getSeznamHercu().isEmpty()){
+                	for (String jmeno : film.getSeznamHercu()) {
+                        herci+=jmeno+":";
+                    }
+                  statement.setString(5, herci);
+                }
+                else{
+                    statement.setString(5, "");
+                }
+
+
+                statement.executeUpdate();
             }
-            System.out.println("Herci nacteni.");
-       } catch (SQLException e) {
-           System.out.println(e.getMessage());
-       }
-	}
-	
-	public void nacteniHercuA(FilmAnim seznamHercuA) {
-		String film;
-		String jmeno;
-		String sql = "SELECT film, jmeno FROM herciA";
-		try {
-            Statement stmt  = conn.createStatement();
-            ResultSet rs    = stmt.executeQuery(sql);
-            while (rs.next()) {
-               		film = rs.getString("film");
-               		jmeno = rs.getString("jmeno");
-               		seznamHercu.addHerce(film, jmeno);
-            }
-            System.out.println("Herci nacteni.");
-       } catch (SQLException e) {
-           System.out.println(e.getMessage());
-       }
-	}
-	*/
-	
+            statement.close();
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error executing SQL statement.");
+            e.printStackTrace();
+        }
+    }
 }
+
+

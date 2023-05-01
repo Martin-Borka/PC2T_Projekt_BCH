@@ -254,18 +254,9 @@ public class Test {
         List<FilmHrany> hraneFilmy = new ArrayList<FilmHrany>();
         List<Herec> herci = new ArrayList<Herec>();
         SQLDatabaze sql = new SQLDatabaze();
-		/*  
-		 ps nemám rád SQL
-		sql.connect();
-		sql.createTable();
-		System.out.println("Nacitani animaku...");
-		sql.nacteniAnimovane(animovaneFilmy);
-		System.out.println("Nacitani hranych...");
-		sql.nacteniHrane(hraneFilmy);
-		System.out.println("Hotovo");
-		sql.disconnect();
         
-       */
+        SQLDatabaze.nactiData(animovaneFilmy, hraneFilmy, herci);
+
         
 		float hodnoceni;
 		int volba;
@@ -803,29 +794,9 @@ public class Test {
 				break;
 				default:
 					
-					sql.connect();
-					sql.dropTable("animovane");
-					sql.dropTable("hrane");
-					sql.createTable();
+					SQLDatabaze.ulozData(animovaneFilmy, hraneFilmy);
 					
-					sql.connect();
-					sql.dropTable("animovane");
-					sql.dropTable("hrane");
-					sql.dropTable("herciH");
-					sql.dropTable("herciA");
-					sql.createTable();
-					
-					
-					/*
-					ps nemám pořád rád SQL
-					System.out.println("Ukladani animovanych filmu...");
-					animovaneFilmy.ulozeniDatabaze(sql);
-					System.out.println("Ukladani hranych filmu...");
-					hraneFilmy.ulozeniDatabaze(sql);
-					
-					sql.disconnect();
-					System.out.println("Hotovo.");
-					*/
+
 					run=false;
 					break;
 			}
