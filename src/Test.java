@@ -143,6 +143,7 @@ public class Test {
 	                    case 3:
 	                        System.out.print("    Současný rok vydání "+vybranyFilm.getRok()+"\n    Nový rok vydání: ");
 	                        vybranyFilm.setRok(Test.pouzeCelaCisla(sc));
+	                        kos=sc.nextLine();
 	                    break;
 	                    case 4:
 	                        if(vybranyFilm.SeznamHercu!=null);
@@ -179,6 +180,7 @@ public class Test {
 	                    case 6:
 	                        System.out.print("    Současný doporučený věk diváka "+vybranyFilm.getNazev()+"\n    Nový doporučený věk diváka: ");
 	                        vybranyFilm.setVek(Test.pouzeCelaCisla(sc));
+	                        kos=sc.nextLine();
 	                    break;
 	                    case 0:
 	                        animovaneFilmy.set(i, vybranyFilm);
@@ -299,9 +301,8 @@ public class Test {
 					//  pridaniFilm(sc);
 					System.out.printf("Zadejte kategorii filmu: \n 1 pro hrane \n 2 pro animovane %n ");
 					int druh=Test.pouzeCelaCisla(sc);
-					 
+					koš=sc.nextLine(); 
 					System.out.println("Zadejte nazev filmu");
-					 nazev=sc.nextLine();
 					 nazev=sc.nextLine();
 					 
 					 
@@ -310,8 +311,8 @@ public class Test {
 					 
 					System.out.println("Zadejte rok vydani (cislo)");
 					rok=Test.pouzeCelaCisla(sc);
+					koš=sc.nextLine(); 
 					System.out.println("Zadejte Rezisera");
-					reziser=sc.nextLine();
 					reziser=sc.nextLine();
 					boolean jeVDatabazi=false;
 
@@ -602,6 +603,7 @@ public class Test {
 					System.out.println("Zadejte druh filmu ve kterém chceš hledat:\n 1 pro herce \n 2 pro animatora");
 					druh=0; 
 					druh=Test.pouzeCelaCisla(sc);
+					koš=sc.nextLine(); 
 					if (druh== 1)
 						System.out.println("Zadejte jmeno herce");
 					else
