@@ -34,7 +34,7 @@ public class Test {
 	            	nalezeno = 1;
 	                break;
 	            }
-	            i++;
+	            i++; 
 	         }
 	            if(nalezeno==0){
 	            	i = 0;
