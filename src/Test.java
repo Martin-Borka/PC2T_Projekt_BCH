@@ -27,7 +27,7 @@ public class Test {
 	        System.out.println("Zadej název filmu: ");
 	        nazev=sc.nextLine();
 	        int i = 0;
-	        int nalezeno = 0;
+	        int nalezeno = 0; 
 	                    
 	        for (FilmHrany film : hraneFilmy) {
 	            if(film.getNazev().equals(nazev)){
@@ -694,7 +694,7 @@ public class Test {
 				case 9:
 					int rok9=0;
 					 String reziser9="";
-					 double hodnoceni9=0.0;
+					 float hodnoceni9=0;
 					 int vek9=0;
 					 int druh9=1;
 					 Boolean n9=false;
@@ -721,8 +721,10 @@ public class Test {
 			                nazev9 = data[1];
 			                reziser9 = data[2];
 			                rok9 = Integer.valueOf(data[3]);
+			                
 			               double a = Double.valueOf(data[4]);
-			               hodnoceni9 = (float) a;
+			                hodnoceni9 = (float) a;
+			               
 			               vek9 = Integer.valueOf(data[5]);
 			               System.out.println(druh9);
 			               System.out.println(nazev9);
@@ -753,7 +755,7 @@ public class Test {
 					            }
 							}
 				            	if (n9!=true)
-								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9));
+								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9, hodnoceni9));
 								
 							}else {
 								for (FilmAnim film : animovaneFilmy) {
@@ -763,7 +765,7 @@ public class Test {
 						            }
 								}
 								if (n9!=true)
-								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9));
+								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9, hodnoceni9));
 							}
 			            
 			            bufferedReader.close();
