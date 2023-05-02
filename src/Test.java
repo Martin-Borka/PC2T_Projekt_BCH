@@ -1,4 +1,4 @@
-import java.awt.geom.Arc2D.Float;
+//import java.awt.geom.Arc2D.Float;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.sql.Connection;
 
-import org.w3c.dom.Text;
 
 
 public class Test {
@@ -828,6 +827,9 @@ public class Test {
 					System.out.println("-10-----------------------------------");
 					
 				break;
+				
+				
+				
 				default:
 					
 					SQLDatabaze.ulozData(animovaneFilmy, hraneFilmy);
