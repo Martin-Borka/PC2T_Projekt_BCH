@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class FilmAnim extends ImgFilm{
                 herci+=jmeno+"\n";
             }
         }
-        
+        Collections.reverse(SeznamHodnocei);
         String hodnoceni = "\\n--Seznam hodnoceni: \\n";
         if(SeznamHercu!=null){
             for (Integer hodno : this.SeznamHodnocei) {
