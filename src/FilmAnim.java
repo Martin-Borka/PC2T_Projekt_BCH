@@ -4,7 +4,10 @@ import java.util.Set;
 
 public class FilmAnim extends ImgFilm{
 	List<String>SeznamHercu;
-	private float Hodnoceni;
+
+	List<Integer>SeznamHodnocei;
+	List<String>SeznamSlovniHodnoceni;
+	//private float Hodnoceni;
     private String SlovHod;
 	
 	FilmAnim(){
@@ -26,13 +29,13 @@ public class FilmAnim extends ImgFilm{
 		
 	}
 	
-	public FilmAnim(String nazev, int rok, int vek, String reziser, List<String>seznamHercu,float hodnoceni){
+	public FilmAnim(String nazev, int rok, int vek, String reziser, List<String>seznamHercu,List<Integer>SeznamHodnocei){
 		this.nazev=nazev;
 		this.rok=rok;
 		this.vek=vek;
 		this.reziser=reziser;
 		this.SeznamHercu= seznamHercu;
-		this.Hodnoceni= hodnoceni;
+		this.SeznamHodnocei= SeznamHodnocei;
 		
 	}
 	
@@ -53,7 +56,15 @@ public class FilmAnim extends ImgFilm{
                 herci+=jmeno+"\n";
             }
         }
-        return(super.filmToString()+"Doporuceny vek: "+vek+herci);
+        
+        String hodnoceni = "\\n--Seznam hodnoceni: \\n";
+        if(SeznamHercu!=null){
+            for (Integer hodno : this.SeznamHodnocei) {
+                hodnoceni+= Float.toString(hodno)+"\\n";
+            }
+        }
+        
+        return(super.filmToString()+"Doporuceny vek: "+vek+herci+ hodnoceni);
     }
 
 	
@@ -109,20 +120,51 @@ public class FilmAnim extends ImgFilm{
 
     public void setHodnoceni(Scanner sc) {
         System.out.print("Zadej hodnoceni (0-10): ");
-        float hodnoceni = Test.pouzeCisla(sc);
+        int hodnoceni = Test.pouzeCelaCisla(sc);
         if(hodnoceni <11 && hodnoceni >-1)
-        this.Hodnoceni = hodnoceni;
+        this.SeznamHodnocei.add(hodnoceni) ;
         else
         setHodnoceni(sc);
     }
     
-    public float getHodnoceni() {
-        return Hodnoceni;
+    public void setSeznamHodnoceni(List<Integer> SeznamHodnocei) {
+        this.SeznamHodnocei = SeznamHodnocei;
     }
     
-    public void setSlovHod(String slovHod)
+    public List<Integer> getHodnoceni() {
+        return SeznamHodnocei;
+    }
+    
+    public String ulozHodnoceni() {
+        String hodnoceni = ";";
+        if(SeznamHercu!=null){
+            for (Integer hodno : this.SeznamHodnocei) {
+                hodnoceni+= Float.toString(hodno)+";";
+            }
+        }
+        
+        return(hodnoceni);
+        	
+        }
+    
+    public String getSlovHod() {
+    	String hodnoceni = "\n--Slovni hodnoceni: \n";
+        if(SeznamHercu!=null){
+            for (String hodno : this.SeznamSlovniHodnoceni) {
+                hodnoceni+= hodno+"\n";
+            }
+        }
+		return hodnoceni;
+	}
+    
+    public void addSlovHod(String hodnota) {
+    	this.SeznamSlovniHodnoceni.add(hodnota);
+    }
+    
+    
+    public void setSlovHod(List<String> slovHod)
     {
-        this.SlovHod = slovHod;
+        this.SeznamSlovniHodnoceni = slovHod;
     }
     
     
@@ -134,8 +176,15 @@ public class FilmAnim extends ImgFilm{
                 herci+=jmeno+":";
             }
         }
-        
-        return("2:"+super.filmToSave()+":"+Float.toString(Hodnoceni)+":"+Integer.toString(vek)+herci);
+        String hodnoceni = ";";
+        if(SeznamHercu!=null){
+            for (Integer hodno : this.SeznamHodnocei) {
+                hodnoceni+= Float.toString(hodno)+";";
+            }
+        }
+
+    
+        return("2:"+super.filmToSave()+":"+hodnoceni+":"+Integer.toString(vek)+herci);
     }
     
     public List<String> getSeznamHercu() {

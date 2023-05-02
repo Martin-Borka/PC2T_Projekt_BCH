@@ -107,7 +107,7 @@ public class Test {
 	                            kos=sc.nextLine();
 	                            if(volba ==1){
 	                                System.out.print("    Zadej slovní hodnocení: ");
-	                                vybranyFilm.setSlovHod(sc.nextLine());
+	                                vybranyFilm.addSlovHod(sc.nextLine());
 	                            }
 	                        break;
 	                        case 0:
@@ -146,12 +146,12 @@ public class Test {
 	                        kos=sc.nextLine();
 	                    break;
 	                    case 4:
-	                        if(vybranyFilm.SeznamHercu!=null);
+	                        if(vybranyFilm.SeznamHercu!=null) {
 	                        System.out.println("    Současný seznam animátorů: "+vybranyFilm.SeznamHercu.get(0));
 	                        for(int j =1; j<vybranyFilm.SeznamHercu.size();j++)
 	                        {
 	                            System.out.println("                               "+vybranyFilm.SeznamHercu.get(j));
-	                        }
+	                        }}
 	                        List<String> novySeznamHercu = new ArrayList<String>();
 	                        System.out.print("    Zadej jméno herce ");
 	                        herec="";
@@ -166,16 +166,33 @@ public class Test {
 	                        vybranyFilm.setSeznamHercu(novySeznamHercu);
 	                    break;
 	                    case 5:
-	                        System.out.println("    Současné hodnocení "+vybranyFilm.getHodnoceni());
-	                        vybranyFilm.setHodnoceni(sc);
-	                        System.out.print(
-	                        "    Chceš zadat slovní hodnocení?\n1   Ano\n2   Ne\n");
-	                        volba=Test.pouzeCelaCisla(sc);
-	                        kos=sc.nextLine();
-	                        if(volba ==1){
-	                            System.out.print("    Zadej slovní hodnocení: ");
-	                            vybranyFilm.setSlovHod(sc.nextLine());
-	                        }
+	                    	int hodn;
+	                    		System.out.println("    Současný seznam hodnoceni: "+vybranyFilm.SeznamHodnocei.get(0));
+	                    		
+	                    		if(vybranyFilm.SeznamHodnocei.get(0)!=null) {
+		                        for(int j =1; j<vybranyFilm.SeznamHodnocei.size();j++)
+		                        {
+		                            System.out.println("                               "+vybranyFilm.SeznamHodnocei.get(j));
+		                        }
+		                        }
+		                        List<Integer> novySeznamHodnoceni = new ArrayList<Integer>();
+		                        System.out.print("    Zadej nove hodnoceni (pro ukončeni napište 666)");
+		                        hodn=666;
+	                            hodn = Test.pouzeCelaCisla(sc);
+	                            kos=sc.nextLine();
+		                        while(hodn!=666){
+		                        	novySeznamHodnoceni.add(hodn);
+	                                herec="";
+		                            System.out.print("    Zadej nove hodnoceni (pro ukončeni napište 666)");
+		                            hodn = Test.pouzeCelaCisla(sc);
+		                            kos=sc.nextLine();
+	                            }	
+		                        
+		                        if(novySeznamHodnoceni!=null) {
+		                        vybranyFilm.setSeznamHodnoceni(novySeznamHodnoceni);	
+		                        }
+	                        
+	                   
 	                    break;
 	                    case 6:
 	                        System.out.print("    Současný doporučený věk diváka "+vybranyFilm.getNazev()+"\n    Nový doporučený věk diváka: ");
@@ -493,7 +510,7 @@ public class Test {
 				           
 				            if(volba ==1){
 				                System.out.print("    Zadej slovní hodnocení: ");
-				                hraneFilmy.get(id4).setSlovHod(sc.nextLine());
+				                hraneFilmy.get(id4).addSlovHod(sc.nextLine());
 				            }
 						}
 						else
@@ -511,7 +528,7 @@ public class Test {
 					           
 					            if(volba ==1){
 					                System.out.print("    Zadej slovní hodnocení: ");
-					                animovaneFilmy.get(id4).setSlovHod(sc.nextLine());
+					                animovaneFilmy.get(id4).addSlovHod(sc.nextLine());
 					            }
 								
 							}
@@ -694,11 +711,12 @@ public class Test {
 				case 9:
 					int rok9=0;
 					 String reziser9="";
-					 float hodnoceni9=0;
+					 //float hodnoceni9=0;
 					 int vek9=0;
 					 int druh9=1;
 					 Boolean n9=false;
 					 List<String> seznamhercu9=new ArrayList<String>();
+					 List<Integer> seznamhod=new ArrayList<Integer>();
 				
 					
 					System.out.println("Zadejte nazev filmu");
@@ -722,12 +740,28 @@ public class Test {
 			                reziser9 = data[2];
 			                rok9 = Integer.valueOf(data[3]);
 			                
-			               double a = Double.valueOf(data[4]);
-			                hodnoceni9 = (float) a;
-			               
+			               //double a = Double.valueOf(data[4]);
+			               // hodnoceni9 = (float) a;
+			                
+			                //-----
+			                String a = data[4];
+			                String[] hodnocen = a.split(";");
+			                
+			                
+			                for(int i=0; i<hodnocen.length;i++) {
+			                	
+			                	if(hodnocen[i]!="") {
+			                	int b= Integer.valueOf(hodnocen[i]);
+				                seznamhod.add(b);
+			                	}
+				                }
+			                
+			               //--------
 			               vek9 = Integer.valueOf(data[5]);
 			               System.out.println(druh9);
 			               System.out.println(nazev9);
+			               
+			               
 			                for(int i=6; i<data.length;i++) {
 			                seznamhercu9.add(data[i]);
 			                
@@ -755,7 +789,7 @@ public class Test {
 					            }
 							}
 				            	if (n9!=true)
-								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9, hodnoceni9));
+								hraneFilmy.add(new FilmHrany(nazev9, rok9, reziser9, seznamhercu9, seznamhod));
 								
 							}else {
 								for (FilmAnim film : animovaneFilmy) {
@@ -765,7 +799,7 @@ public class Test {
 						            }
 								}
 								if (n9!=true)
-								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9, hodnoceni9));
+								animovaneFilmy.add(new FilmAnim(nazev9,rok9, vek9, reziser9, seznamhercu9, seznamhod));
 							}
 			            
 			            bufferedReader.close();
