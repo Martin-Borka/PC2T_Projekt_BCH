@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 public class FilmHrany extends ImgFilm{
 	List<String>SeznamHercu;
-	List<Integer>SeznamHodnocei;
-	List<String>SeznamSlovniHodnoceni;
-	//private float Hodnoceni;
+	private float Hodnoceni;
     private String SlovHod;
 
 
@@ -32,14 +30,13 @@ public class FilmHrany extends ImgFilm{
 		this.SeznamHercu= seznamHercu;
 	}
 	
-	public FilmHrany(String nazev, int rok, String reziser, List<String>seznamHercu,List<Integer>SeznamHodnocei){
+	public FilmHrany(String nazev, int rok, String reziser, List<String>seznamHercu,float hodnoceni){
 		this.nazev=nazev;
 		this.rok=rok;
 		this.reziser=reziser;
 		this.SeznamHercu= seznamHercu;
-		//this.Hodnoceni= hodnoceni;
-		this.SeznamHodnocei=SeznamHodnocei;
-		this.SeznamSlovniHodnoceni=SeznamSlovniHodnoceni;
+		this.Hodnoceni= hodnoceni;
+		//this.SeznamHodnoceni;
 	}
 	
 	@Override
@@ -56,17 +53,7 @@ public class FilmHrany extends ImgFilm{
                 herci+=jmeno+"\n";
             }
         }
-        
-        
-        String hodnoceni = "\n--Seznam hodnoceni: \n";
-        if(SeznamHercu!=null){
-            for (Integer hodno : this.SeznamHodnocei) {
-                hodnoceni+= Float.toString(hodno)+"\n";
-            }
-        }
-
-
-        return(super.filmToString()+herci+ hodnoceni);
+        return(super.filmToString()+herci);
     }
 	
 	
@@ -115,56 +102,24 @@ public class FilmHrany extends ImgFilm{
     
     public void setHodnoceni(Scanner sc) {
         System.out.print("Zadej hodnoceni (0-5): ");
-        int hodnoceni = Test.pouzeCelaCisla(sc);
+        float hodnoceni = Test.pouzeCisla(sc);
         if(hodnoceni <6 && hodnoceni >-1)
-        this.SeznamHodnocei.add(hodnoceni);
+        this.Hodnoceni = hodnoceni;
         else
         setHodnoceni(sc);
     }
-    
-    public void setSeznamHodnoceni(List<Integer> SeznamHodnocei) {
-        this.SeznamHodnocei = SeznamHodnocei;
-    }
-    
 	
-    public List<Integer> getHodnoceni() {
-        return SeznamHodnocei;
-    }
-   
-    public String ulozHodnoceni() {
-    String hodnoceni = ";";
-    if(SeznamHercu!=null){
-        for (Integer hodno : this.SeznamHodnocei) {
-            hodnoceni+= Float.toString(hodno)+";";
-        }
+    public float getHodnoceni() {
+        return Hodnoceni;
     }
     
-    return(hodnoceni);
-    	
-    }
-    
-    
-		// TODO Auto-generated method stub
-
-	
     public String getSlovHod() {
-    	String hodnoceni = "\n--Slovni hodnoceni: \n";
-        if(SeznamHercu!=null){
-            for (String hodno : this.SeznamSlovniHodnoceni) {
-                hodnoceni+= hodno+"\n";
-            }
-        }
-		return hodnoceni;
+		return SlovHod;
 	}
     
-    public void addSlovHod(String hodnota) {
-    	this.SeznamSlovniHodnoceni.add(hodnota);
-    }
-    
-    
-    public void setSlovHod(List<String> slovHod)
+    public void setSlovHod(String slovHod)
     {
-        this.SeznamSlovniHodnoceni = slovHod;
+        this.SlovHod = slovHod;
     }
     
     
@@ -185,15 +140,7 @@ public class FilmHrany extends ImgFilm{
             }
         }
         
-        String hodnoceni = ";";
-        if(SeznamHercu!=null){
-            for (Integer hodno : this.SeznamHodnocei) {
-                hodnoceni+= Float.toString(hodno)+";";
-            }
-        }
-        
-        
-        return("1:"+super.filmToSave()+":"+hodnoceni+":0"+herci);
+        return("1:"+super.filmToSave()+":"+Float.toString(Hodnoceni)+":0"+herci);
     }
     
     

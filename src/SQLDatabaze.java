@@ -50,20 +50,8 @@ public class SQLDatabaze {
                         }
                     }//------------------
                     
-                    List<Integer> seznamHodnoceni= new ArrayList<Integer>(); 
-                    String hodnoceniText = rs.getString(7);
-                    if(!hodnoceniText.equals("")){
-                    	
-                        for (String hodnocen : hodnoceniText.split(";")){
-                            if(hodnocen !=""){
-                            	int uloz = Integer.valueOf(hodnocen);
-                            	
-                            	seznamHodnoceni.add(uloz);}
-                        }
-                    }
-                    
-                    //float hodnoceni = rs.getFloat(7);
-                    FilmHrany film =new FilmHrany(nazev, rok, reziser, seznamHercu, seznamHodnoceni);//String nazev, int rok, String reziser, List<String>seznamHercu,float hodnoceni)
+                    float hodnoceni = rs.getFloat(6);
+                    FilmHrany film =new FilmHrany(nazev, rok, reziser, seznamHercu, hodnoceni);//String nazev, int rok, String reziser, List<String>seznamHercu,float hodnoceni)
                     hranefilmy.add(film);
                 }
                 else
@@ -91,22 +79,9 @@ public class SQLDatabaze {
 							}
                         }
                     }
-                    List<Integer> seznamHodnoceni= new ArrayList<Integer>(); 
-                    String hodnoceniText = rs.getString(7);
-                    if(!hodnoceniText.equals("")){
-                    	
-                        for (String hodnocen : hodnoceniText.split(";")){
-                            if(hodnocen !=""){
-                            	int uloz = Integer.valueOf(hodnocen);
-                            	
-                            	seznamHodnoceni.add(uloz);}
-                        }
-                    }
-                    
-                    
-                    //int hodnoceni = rs.getInt(7);
+                    int hodnoceni = rs.getInt(7);
                     int doporucenyVek = rs.getInt(8);
-                    FilmAnim film =new FilmAnim(nazev, rok, doporucenyVek,reziser,seznamHercu ,seznamHodnoceni);
+                    FilmAnim film =new FilmAnim(nazev, rok, doporucenyVek,reziser,seznamHercu ,hodnoceni);
                     animovanefilmy.add(film);
                 }
             }
@@ -131,11 +106,7 @@ public class SQLDatabaze {
                 statement.setString(2, film.getNazev());
                 statement.setInt(3, film.getRok());
                 statement.setString(4, film.getReziser());
-                
-                
-                statement.setString(6, film.ulozHodnoceni());
-                
-                
+                statement.setFloat(6, film.getHodnoceni());
                 String herci = "";
                 if(!film.getSeznamHercu().isEmpty()){
                     
@@ -157,11 +128,7 @@ public class SQLDatabaze {
                 statement.setString(2, film.getNazev());
                 statement.setInt(3, film.getRok());
                 statement.setString(4, film.getReziser());
-                
-                
-                statement.setString(6, film.ulozHodnoceni());
-                
-                
+                statement.setFloat(6, film.getHodnoceni());
                 statement.setInt(7, film.getVek());
                 
                 String herci = "";
