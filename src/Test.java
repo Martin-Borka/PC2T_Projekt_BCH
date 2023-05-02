@@ -272,7 +272,7 @@ public class Test {
         List<Herec> herci = new ArrayList<Herec>();
         SQLDatabaze sql = new SQLDatabaze();
         
-        SQLDatabaze.nactiData(animovaneFilmy, hraneFilmy, herci);
+       // SQLDatabaze.nactiData(animovaneFilmy, hraneFilmy, herci);
 
         
 		float hodnoceni;
